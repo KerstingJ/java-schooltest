@@ -2,12 +2,12 @@ package com.lambdaschool.school.controller;
 
 import com.lambdaschool.school.model.Course;
 import com.lambdaschool.school.service.CourseService;
-import com.lambdaschool.school.view.CountStudentsInCourses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 
 @RestController
@@ -30,6 +30,11 @@ public class CourseController
         return new ResponseEntity<>(courseService.getCountStudentsInCourse(), HttpStatus.OK);
     }
 
+    @PostMapping(value="/course/add", consumes="application/json", produces="application/json")
+    public ResponseEntity<?> saveCourse(@Valid @RequestBody Course course)
+    {
+        return new ResponseEntity<>(courseService.save(course), HttpStatus.OK);
+    }
     @DeleteMapping("/courses/{courseid}")
     public ResponseEntity<?> deleteCourseById(@PathVariable long courseid)
     {
